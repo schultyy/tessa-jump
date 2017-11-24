@@ -5,7 +5,8 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create
 function preload() {
 
     game.load.image('sky', 'assets/sky.png');
-    game.load.image('ground', 'assets/platform.png');
+    game.load.image('platform', 'assets/platform.png');
+    game.load.image('ground', 'assets/ground.png');
     game.load.image('star', 'assets/star.png');
     game.load.image('tessa', 'assets/tessa.png');
 }
@@ -42,10 +43,13 @@ function create() {
     ground.body.immovable = true;
 
     //  Now let's create two ledges
-    var ledge = platforms.create(400, 400, 'ground');
+    var ledge = platforms.create(150, 450, 'platform');
     ledge.body.immovable = true;
 
-    ledge = platforms.create(-150, 250, 'ground');
+    var ledge = platforms.create(-150, 250, 'platform');
+    ledge.body.immovable = true;
+
+    ledge = platforms.create(350, 300, 'platform');
     ledge.body.immovable = true;
 
     // The player and its settings
