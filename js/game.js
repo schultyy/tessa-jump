@@ -15,7 +15,6 @@ var player;
 var platformsGroup;
 var cursors;
 
-var stars;
 var score = 0;
 var scoreText;
 
@@ -67,23 +66,6 @@ function create() {
     player.animations.add('left', [0, 1, 2, 3], 10, true);
     player.animations.add('right', [5, 6, 7, 8], 10, true);
 
-    //  Finally some stars to collect
-    stars = game.add.group();
-
-    //  We will enable physics for any star that is created in this group
-    stars.enableBody = true;
-
-    //  Here we'll create 12 of them evenly spaced apart
-    for (var i = 0; i < 12; i++)
-    {
-        //  Create a star inside of the 'stars' group
-        var star = stars.create(i * 70, 0, 'star');
-        //  Let gravity do its thing
-        star.body.gravity.y = 300;
-        //  This just gives each star a slightly random bounce value
-        star.body.bounce.y = 0.7 + Math.random() * 0.2;
-    }
-
     //  The score
     scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
     //  Our controls.
@@ -91,12 +73,7 @@ function create() {
 }
 
 function update() {
-    //  Collide the player and the stars with the platformsGroup
     game.physics.arcade.collide(player, platformsGroup);
-    game.physics.arcade.collide(stars, platformsGroup);
-
-    //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-    game.physics.arcade.overlap(player, stars, collectStar, null, this);
 
     //  Reset the players velocity (movement)
     player.body.velocity.x = 0;
@@ -125,12 +102,4 @@ function update() {
     {
         player.body.velocity.y = -350;
     }
-}
-
-function collectStar (player, star) {
-    // Removes the star from the screen
-    star.kill();
-    //  Add and update the score
-    score += 10;
-    scoreText.text = 'Score: ' + score;
 }
