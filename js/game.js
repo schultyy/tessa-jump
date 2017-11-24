@@ -54,7 +54,7 @@ function create() {
     // player.body.collideWorldBounds = true;
 
     player.checkWorldBounds = true;
-    player.events.onOutOfBounds.add(killPlayer, this);
+    player.body.collideWorldBounds = true;
 
     //  Our two animations, walking left and right.
     player.animations.add('left', [0, 1, 2, 3], 10, true);
@@ -95,9 +95,9 @@ function update() {
     {
         player.body.velocity.y = -350;
     }
-}
 
-function killPlayer(player) {
-  player.kill();
-  const scoreText = game.add.text(50, 50, 'Game over', { fontSize: '32px', fill: '#000' });
+    if (player.position.y >= 551) {
+      player.kill();
+      const scoreText = game.add.text(50, 50, 'Game over', { fontSize: '32px', fill: '#000' });
+    }
 }
