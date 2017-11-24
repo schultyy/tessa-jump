@@ -12,7 +12,7 @@ function preload() {
 }
 
 var player;
-var platforms;
+var platformsGroup;
 var cursors;
 
 var stars;
@@ -27,14 +27,14 @@ function create() {
     //  A simple background for our game
     game.add.sprite(0, 0, 'sky');
 
-    //  The platforms group contains the ground and the 2 ledges we can jump on
-    platforms = game.add.group();
+    //  The platformsGroup group contains the ground and the 2 ledges we can jump on
+    platformsGroup = game.add.group();
 
     //  We will enable physics for any object that is created in this group
-    platforms.enableBody = true;
+    platformsGroup.enableBody = true;
 
     // Here we create the ground.
-    var ground = platforms.create(0, game.world.height - 64, 'ground');
+    var ground = platformsGroup.create(0, game.world.height - 64, 'ground');
 
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
     ground.scale.setTo(2, 2);
@@ -43,13 +43,13 @@ function create() {
     ground.body.immovable = true;
 
     //  Now let's create two ledges
-    var ledge = platforms.create(150, 450, 'platform');
+    var ledge = platformsGroup.create(150, 450, 'platform');
     ledge.body.immovable = true;
 
-    var ledge = platforms.create(-150, 250, 'platform');
+    var ledge = platformsGroup.create(-150, 250, 'platform');
     ledge.body.immovable = true;
 
-    ledge = platforms.create(350, 300, 'platform');
+    ledge = platformsGroup.create(350, 300, 'platform');
     ledge.body.immovable = true;
 
     // The player and its settings
@@ -59,8 +59,8 @@ function create() {
     game.physics.arcade.enable(player);
 
     //  Player physics properties. Give the little guy a slight bounce.
-    player.body.bounce.y = 0.2;
-    player.body.gravity.y = 300;
+    player.body.bounce.y = 0.1;
+    player.body.gravity.y = 200;
     player.body.collideWorldBounds = true;
 
     //  Our two animations, walking left and right.
@@ -91,9 +91,9 @@ function create() {
 }
 
 function update() {
-    //  Collide the player and the stars with the platforms
-    game.physics.arcade.collide(player, platforms);
-    game.physics.arcade.collide(stars, platforms);
+    //  Collide the player and the stars with the platformsGroup
+    game.physics.arcade.collide(player, platformsGroup);
+    game.physics.arcade.collide(stars, platformsGroup);
 
     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
     game.physics.arcade.overlap(player, stars, collectStar, null, this);
